@@ -1,0 +1,78 @@
+.fancybox {
+  overflow: hidden;
+  position: relative;
+  > .fancybox-items {
+    position: relative;
+    overflow: hidden;
+    transition: left 0.5s;
+    -moz-transition: left 0.5s; /* Firefox 4 */
+    -webkit-transition: left 0.5s; /* Safari and Chrome */
+    -o-transition: left 0.5s; /* Opera */
+    > li {
+      display: inline-block;
+      overflow: hidden;
+      text-align: center;
+      img {
+        // width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  > .fancybox-indexes {
+    position: absolute;
+    left: 50%;
+    bottom: $spacing-unit;
+    > li {
+      display: inline-block;
+      position: relative;
+      right: 50%;
+      > span {
+        background-color: white;
+        width: 10px;
+        height: 10px;
+        border-radius: 10px;
+        display: inline-block;
+        margin: 0 $spacing-unit/6;
+      }
+    }
+    > li.active {
+      > span {
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+    }
+  }
+}
+
+
+.fixedbox {
+  padding: $spacing-unit/2 0;
+  background-color: rgba(00, 00, 00, 0.6);
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  height: 32px;
+  line-height: 32px;
+  color: white;
+  p {
+    line-height: 16px;
+    font-size: 14px;
+  }
+  > div {
+    float: left;
+    height: 32px;
+    margin-left: $spacing-unit/3;
+  }
+  > div:first-child {
+    margin-left: $spacing-unit/2;
+  }
+  .fixedbox-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 32px;
+    height: 32px;
+    line-height: 32px;
+    vertical-align: middle;;
+    padding: 0;
+  }
+}

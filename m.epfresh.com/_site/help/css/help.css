@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: #efefef;
+  color: #434343;
+  font-size: 16px;
+  font-family: Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", STXihei, STHeiti, Heiti, SimSun, sans-serif;
+}
+body.help-content {
+  background-color: white;
+}
+
+a {
+  color: #434343;
+  text-decoration: none;
+}
+ul {
+  margin-top: 1rem;
+}
+ul > li {
+  background-color: white;
+  border-bottom: 1px solid #efefef;
+}
+ul > li > a {
+  display: block;
+  padding: 1rem 1.5rem;
+}
+ul > li > a::before {
+  content: '';
+  float: right;
+  border-top: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+  margin-top: 2px;
+  width: 14px;
+  height: 14px;
+  transform:rotate(45deg);
+-ms-transform:rotate(45deg); 	/* IE 9 */
+-moz-transform:rotate(45deg); 	/* Firefox */
+-webkit-transform:rotate(45deg); /* Safari 和 Chrome */
+-o-transform:rotate(45deg); 	/* Opera */
+}
+article {
+  padding: 1rem 1rem 0;
+}
+article > p {
+  text-indent: 2rem;
+  margin-top: 1rem;
+  line-height: 1.5rem;
+  color: #535353;
+}

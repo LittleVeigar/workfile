@@ -1,0 +1,108 @@
+@charset "utf-8";
+
+// Our variables
+$base-font-family: 'microsoft yahei',Verdana,Arial,Helvetica,sans-serif;
+$base-font-size:   18px;
+$base-font-weight: 400;
+$small-font-size:  $base-font-size * 0.875;
+$base-line-height: 1.5;
+$spacing-unit:     30px;
+$text-color:       #434343;
+$background-color: white;
+
+div[class^='product-'] {
+  padding-left:$spacing-unit/2;
+  padding-right:$spacing-unit/2;
+  margin-top: $spacing-unit/2.5;
+}
+
+.product-meta .product-meta-price {
+  color: #ff0000;
+}
+
+.product-meta .product-meta-package {
+  color: #8a8a8a;
+  background-color: #eeeeee;
+  padding: 3px 6px;
+  border-radius: 6px;
+  margin-left: $spacing-unit/5;
+}
+.product-tags {
+  .tag {
+    border-radius: 3px;
+    font-size: 0.6em;
+    border-style: solid;
+    border-width: 1px;
+    padding: 1px 5px;
+    margin-right: 0.5em;
+  }
+}
+.product-warn {
+  background-color: #fff799;
+  color: #e4007f;
+  text-align: center;
+  padding-top: $spacing-unit/6;
+  padding-bottom: $spacing-unit/6;
+}
+
+.product-info > div {
+  margin-top: $spacing-unit/2.5;
+  > label {
+    display: inline-block;
+    width: 20%;
+    color: #959595;
+  }
+}
+.product-desc {
+  border-bottom: $spacing-unit/1.5 solid #eeeeee;
+  padding-bottom: $spacing-unit/2;
+  > div {
+      > label {
+          display: block;
+          color: #959595;
+          margin-top: $spacing-unit/2.5;
+          margin-bottom: $spacing-unit/6;
+      }
+  }
+}
+.product-more-line {
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: $spacing-unit/2.5;
+}
+.product-images, .fancybox {
+  img {
+    width: 100%;
+  }
+}
+
+.fixedbox {
+  .logo {
+    img {
+      vertical-align: middle;
+    }
+  }
+  .download {
+    float: right;
+    margin-right: 10px;
+    margin-left: 0;
+  }
+  .btn-download {
+    background: #3faf2a;
+    border:1px solid #3faf2a;
+    font-size: 1em;
+    color: white;
+    height: 32px;
+    padding: 0 1em;
+    border-radius: 5px;
+  }
+}
+
+div.no-padding {
+  padding: 0;
+}
+
+// Import partials from `sass_dir` (defaults to `_sass`)
+@import
+        "base",
+        "layout"
+;
