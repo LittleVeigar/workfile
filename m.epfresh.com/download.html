@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title> - e批生鲜</title>
+  <link rel="shortcut icon" href="favicon.ico"/>
+  <style>
+  * {
+    margin: 0; padding: 0;
+  }
+    html {
+      height: 100%;
+    }
+    body {
+      background: url('images/bg-download.png') no-repeat;
+      background-size: 100% 100%;
+      font-size: 14px;
+      font-family: Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", STXihei, STHeiti, Heiti, SimSun, sans-serif;
+    }
+    .wrapper {
+      width: 75%;
+      margin: 6rem auto 0;
+      background-color: white;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      position: relative;
+      padding-bottom: 3rem;
+    }
+    .wrapper .logo{
+      width: 38%;
+      margin: 0 auto;
+    }
+    .wrapper .logo img{
+      width: 100%;
+      margin-top: -45%;
+    }
+    h1, .h1 {
+      text-align: center;
+      font-weight: normal;
+      letter-spacing: 2px;
+      color: #313131;
+      font-size: 1.3rem;
+      margin: 1rem 0 0.7rem;
+    }
+    .line {
+      height: 2px;
+      background: -webkit-radial-gradient(50% 60%,#e5e5e5, white); /* Safari 5.1 - 6.0 */
+      background: -o-radial-gradient(50% 60%, #e5e5e5, white); /* Opera 11.6 - 12.0 */
+      background: -moz-radial-gradient(50% 60%, #e5e5e5, white); /* Firefox 3.6 - 15 */
+      background: radial-gradient(50% 60%, #e5e5e5, white); /* 标准的语法（必须放在最后） */
+    }
+    .subtitle {
+      text-align: center;
+      color: #7d7d7d;
+      font-size: 1.1rem;
+      font-weight: 200;
+      margin: 0.5rem auto 2rem;
+      line-height: 1.1rem;
+    }
+    .subtitle span {
+      position: relative;
+      top: 0.2rem;
+      font-size: 2rem;
+      line-height: 1.1rem;
+      display: inline-block;
+    }
+    .btn {
+      display: block;
+      width: 80%;
+      margin: 0 auto;
+      height: 3rem;
+      font-size: 1.1rem;
+      font-weight: 200;
+      background-color: #3fcf3b;
+      border: 1px solid transparent;
+      color: white;
+      margin-top: 4rem;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="logo"><img src="" alt="e批生鲜" title="e批生鲜"></div>
+    <h1>e批生鲜</h1>
+    <p id="type-str" class="h1"></p>
+    <div class="line"></div>
+    <div class="subtitle"></div>
+    <button class="btn">下载客户端</button>
+  </div>
+  <script src="scripts/common.js"></script>
+  <script src="scripts/plugins/jquery.min.js"></script>
+  <script>
+  var search = window.location.search.replace('?', '');
+  var parameters = {};
+  var _temp = search.split('&');
+  for(var i in _temp) {
+    var __temp = _temp[i].split('=');
+    parameters[__temp[0]] = __temp[1];
+  }
+  var type = parameters['type'];
+  var ua = navigator.userAgent.toLowerCase();
+  // 微信
+  if(/micromessenger/.test(ua)) {
+    $('.btn').click(function() {
+      var backdrop = document.createElement('div');
+      backdrop.style.cssText = 'position: fixed; background-color: rgba(0,0,0,0.6); left: 0; right: 0; top: 0; bottom: 0;';
+      backdrop.innerHTML = '<div style="color: white; padding: 1em 1.25em 0 0;"><p style="text-align: right; "><img src="images/jiantou.png" width="33.33%"/></p><p style="margin: -0.8em 0 0 35%;">不能下载？</p><p style="margin: 0 0 0 35%;">请点击右上角用浏览器打开</p></div>';
+      document.body.appendChild(backdrop);
+      backdrop.onclick = function() {
+        backdrop.remove();
+      }
+    });
+  } else {
+    $.ajax({
+      url: Request.url,
+      data: {"cmd": "homepage/downloadUrl", "parameters": {}},
+      type: Request.type,
+      dataType: 'jsonp',
+      contentType: 'application/json;charset=UTF-8',
+      cache: true,
+    }).done(function (data) {
+      data = data.response;
+      var downloadUrl;
+      var schemaUrl = 'epfresh://';
+      if (type === 'supplier') {
+        schemaUrl = 'supplier.'+schemaUrl;
+      }
+
+      if(/iphone|ipad|ipod/.test(ua)) {
+        if(type === 'purchaser') {
+          downloadUrl = data['appDownLoad.iosPurchase'];
+        } else if (type === 'supplier') {
+          downloadUrl = data['appDownLoad.iosSupplies'];
+        }
+      } else if(/android/.test(ua)) {
+        if(type === 'purchaser') {
+          downloadUrl = data['appDownLoad.androidPurchase'];
+        } else if (type === 'supplier') {
+          downloadUrl = data['appDownLoad.androidSupplies'];
+        }
+      }
+      $('.btn').click(function() {
+        window.location.href = schemaUrl;
+        setTimeout(function() {
+          window.location.href = downloadUrl;
+        }, 1500);
+      });
+    }).fail(function() {
+      alert('请求失败，请重试！');
+    });
+  }
+
+  $(function() {
+    var title, logoSrc, subTitle;
+    if(type === 'purchaser') {//采购商APP
+      title = '采购商APP下载';
+      logoSrc = 'images/logo-purchaser.png';
+      subTitle = '更省<span>·</span>更新鲜<span>·</span>更安全';
+    } else if( type === 'supplier') {//供应商APP
+      title = '供应商APP下载';
+      logoSrc = 'images/logo-supplier.png';
+      subTitle = '更赚<span>·</span>更省<span>·</span>更安全';
+    }
+    document.title = title + document.title;
+    $('.logo > img').prop('src', logoSrc);
+    $('.subtitle').html(subTitle);
+    $('#type-str').text(title);
+  });
+  </script>
+</body>
+</html>

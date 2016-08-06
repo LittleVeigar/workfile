@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title> - e批生鲜</title>
+  <style>
+  body {
+    font-family: 'microsoft yahei',Verdana,Arial,Helvetica,sans-serif;
+  }
+  h1 {
+    text-align: left;
+    padding: 0 2rem;
+    font-size: 1.5em;
+  }
+  article > p {
+    font-size: 1em;
+  }
+  #notice-time {
+    color: #999;
+    padding-left: 2rem;
+  }
+  </style>
+  <script src="scripts/plugins/jquery.min.js"></script>
+</head>
+<body>
+  <h1 id="notice-title"></h1>
+  <time id="notice-time"></time>
+  <article id="notice-content">
+  </article>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script>
+  $(function() {
+    var search = window.location.search.replace('?', '');
+    var parameters = {};
+    var _temp = search.split('&');
+    for(var i in _temp) {
+      var __temp = _temp[i].split('=');
+      parameters[__temp[0]] = __temp[1];
+    }
+    var postData = {
+      "cmd": "homepage/noticeDetail",
+      "parameters": parameters
+    };
+    $.ajax({
+      url: Request.url,
+      type: Request.type,
+      dataType: 'jsonp',
+      contentType: 'application/json;charset=UTF-8',
+      data: postData,
+      cache: true,
+      success: function(data) {
+        if(data && data.error) {
+          alert(data.error.errorInfo);
+        } else {
+          data = data.response.notice;
+          document.title = data.title + document.title;
+          $('#notice-title').text(data.title);
+          $('#notice-time').text(data.publishDate);
+          $('#notice-content').html(data.content);
+        }
+      }.bind(this),
+      error: function(xhr, status, err) {
+        alert(err.toString());
+      }.bind(this)
+    });
+  })
+  </script>
+</body>
+</html>
