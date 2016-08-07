@@ -1,0 +1,6 @@
+/*透明度*/
+filter:alpha(Opacity=50);//IE6
+-moz-opacity:0.5;// 老版本的火狐
+opacity:0.5;
+-khtml-opacity:0.5;／／khtml内核的safari
+-webkit-opacity:0.5;／／旧版本Safari和chrome

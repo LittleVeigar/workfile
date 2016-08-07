@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>景点详情</title>
+	<meta name="viewport" content="width=device-width,height=device-height, initial-scale=1, maximum-scale=1, 
+	minimum-scale=1, user-scalable=no" />
+	<link rel="stylesheet" type="text/css" href="../style/bootstrap-3.3.5/dist/css/bootstrap.min.css"> 
+	<link rel="stylesheet" type="text/css" href="../style/swiper/swiper-3.3.1.min.css">    
+	<style type="text/css">
+		body { font-size: 14px; }
+		header { position: fixed;left: 0;right: 0;top: 0;height: 44px;line-height: 44px;text-align: center;background-color: #099fde;color: #fff;z-index: 960; }
+		.cm-header-icon { width: 44px;height: 44px;display: inline-block;text-align: center; }
+		.fl { float: left; }
+		.icon-back::before {
+			content: "";
+			display: inline-block;
+			width: 10px;
+			height: 10px;
+			vertical-align: middle;
+			border-left: 2px solid #fff;
+			border-bottom: 2px solid #fff;
+			-webkit-transform: rotate(45deg);
+			transform: rotate(45deg);
+			box-sizing: border-box;
+		}
+		.cm-header, .cm-page-select-title {position: absolute;left: 88px;right: 88px;margin: 0; line-height: 44px;}
+		h1 { font: normal 1.286em/2 Verdana,"Microsoft YaHei"; }
+		.cm-header h1 {font: normal 1.286em/2 Verdana,"Microsoft YaHei";}
+		.cm-header,.cm-page-select-title::after {
+			content: "";
+			position: relative;
+			top: -2px;
+			display: inline-block;
+			width: 6px;
+			height: 6px;
+			border-bottom: 2px solid #fff;
+			border-left: 2px solid #fff;
+			margin-left: 5px;
+			vertical-align: middle;
+			-webkit-transform: rotate(-45deg);
+			transform: rotate(-45deg);
+			-webkit-transition: all 0.3s ease-in-out;
+			transition: all 0.3s ease-in-out;
+		}
+		ul {
+			margin: 0;
+			display: none;
+			padding: 0;
+		}
+		.hotel-date-choose {
+
+			position: fixed;
+			top: 44px;
+			left: 0px;
+			width: 100%;
+			display: table-row;
+			display: none;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+			padding-bottom: 10px;
+			overflow: hidden;
+			background: #f4f4f4;
+			z-index: 10; 
+		}
+		.hotel-date-choose  li{
+			display: table-column;
+			float: left;
+			width: 44%;
+			height: 32px;
+			margin: 10px 2% 0 2%;
+			font-size: 16px;
+			line-height: 32px;
+			color: #666;
+			text-align: center;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+		}
+		.hotel-date-choose li.cur{
+			border-color: #009fde;
+			color: #009fde;
+		}
+		.swiper-container {
+			width: 100%;
+			height: 210px;
+		}
+		.nextButton {
+			position: fixed;
+			top: 45%;
+			right: -22px;
+			height: 44px;
+			width: 44px;
+			background: rgba(64,76,91,0.8);
+			border-radius: 50%;
+			z-index: 3;
+		}
+		.nextButton::before{
+			content:"";
+			display: block;
+			border-color: #fff;
+			border-bottom: 2px solid #fff;
+			border-left: 2px solid #fff;
+			width: 10px;
+			height: 10px;
+			margin-top: 15px;
+			margin-left: 6px;
+			transform: rotate(-130deg);		
+		} 
+		.preButton {
+			position: fixed;
+			top: 45%;
+			left: -22px;
+			height: 44px;
+			width: 44px;
+			background: rgba(64,76,91,0.8);
+			border-radius: 50%;
+			z-index: 3;
+		}
+		.preButton::after{
+			content:"";
+			display: block;
+			border-color: #fff;
+			border-right: 2px solid #fff;
+			border-top: 2px solid #fff;
+			width: 10px;
+			height: 10px;
+			margin-top: 15px;
+			margin-left: 28px;
+			transform: rotate(-130deg);		
+		}
+		.detail-hotel-info{
+			position: relative;
+			z-index: 3;
+			margin-top: 0px;
+			background: #fff;
+			padding: 0 15px 10px;
+			overflow: hidden;
+			border-top-width: 1px;
+			border-bottom-width: 1px;
+		}
+		.detail-hotel-name{
+			line-height: 1.2;
+			font-size: 16px;
+			font-weight: normal;
+			font-family: Arial,"Lucida Grande",Verdana,"Microsoft YaHei",hei;
+		}
+		.detail-hotel-particulars{
+			color: #666;
+			font-size: 12px;
+			line-height: 1.2;
+		}
+		.detail-hotel-particulars dt{
+			float: left;
+			color: #666;
+			font-size: 12px;
+			line-height: 1.2;
+			font-weight: normal;
+			font-family: Arial,"Lucida Grande",Verdana,"Microsoft YaHei",hei;
+		}  
+		.detail-hotel-list {
+			position: relative;
+			z-index: 3;
+			display: block;
+		}
+		.detail-hotel-list h3 {
+			position: relative;
+			font-size: 16px;
+			color: #333;
+			font-weight: normal;
+			font-family: Arial,"Lucida Grande",Verdana,"Microsoft YaHei",hei;
+		}
+		.detail-hotel-list h3 strong {
+			color: #ff9900;
+			font-size: 18px;
+			left: 30px;
+		}
+		.hotel-grade h3:before {
+			content: "";
+			position: absolute;
+			left: -27px;
+			top: 6px;
+			width: 18px;
+			height: 17px;
+			background-position: 0 -35px;
+			top: 6px;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<span class=" cm-header-icon fl  js_back"><i class="icon-back"></i></span>
+		<h1 class="cm-page-select-title js_select">第2天景点</h1>
+	</header>
+	<main>
+		<ul class="hotel-date-choose">
+			<li class="cur">第2天</li>
+			<li>第3天</li>
+		</ul>
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide"><img src="../image/slide/firstday-image1.jpg" height="100%" width="100%"></div>
+			<div class="swiper-slide"><img src="../image/slide/firstday-image2.jpg" height="100%" width="100%"></div>
+			<div class="swiper-slide"><img src="../image/slide/firstday-image3.jpg" height="100%" width="100%"></div>
+			<div class="swiper-slide"><img src="../image/slide/firstday-image4.jpg" height="100%" width="100%"></div>
+			<div class="swiper-slide"><img src="../image/slide/firstday-image5.jpg" height="100%" width="100%"></div>
+		</div>
+		<!-- 如果需要分页器 -->
+		<div class="swiper-pagination"></div>
+	</div>
+	<div class="detail-hotel-info border_bottom_1px">
+		<h2 class="detail-hotel-name"><span>海神庙</span></h2>
+		<dl class="detail-hotel-particulars">
+			<dt class="">地址：</dt>
+			<dd>Jl. Tanah Lot, Canggu, Bali</dd>
+			<dt class="">类型：</dt>
+			<dd>
+				<span>礁石/岩石</span>
+				<span>海滨/沙滩</span>
+				<span>寺庙</span>
+				<span>古迹</span>
+			</dd>
+		</dl>
+	</div>
+	<ul class="detail-hotel-list">
+		<li class="hotel-grade"><h3><strong>4.3</strong>分 2207人点评</h3></li>
+		<li>登上观景亭，远眺海神庙，看夕阳将金光洒满印度洋，金色的夕阳朦胧的光线勾勒出海神庙古典而又充满了浪漫情调的轮廓。</li>
+	</ul>
+	<i class="preButton"></i>
+	<i class="nextButton"></i>
+	<div><span><em>1</em>/2</span></div>
+	</main>
+	<footer></footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="../style/jquery-1.11.3/jquery.min.js"></script>
+<script src="../style/bootstrap-3.3.5/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../style/swiper/swiper-3.3.1.jquery.min.js"></script>
+<script>        
+  var mySwiper = new Swiper ('.swiper-container', {
+    direction: 'horizontal',
+    loop: true,  
+    // 如果需要分页器
+    pagination: '.swiper-pagination', 
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+  })        
+  </script>
+</body>
+</html>
