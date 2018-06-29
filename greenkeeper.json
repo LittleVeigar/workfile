@@ -1,0 +1,9 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "inworkfile/Island-club-guangzhou/style/bootstrap-3.3.5/package.json"
+      ]
+    }
+  }
+}
